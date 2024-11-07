@@ -49,9 +49,13 @@ while running:
     
 
     if ball_right :
+        ball_pos.x += 2
+    else :
         ball_pos.x -= 2
     
-    if ball_pos.x < 0 :
+    if ball_pos.x < -8 :
+        ball_right = True
+    if ball_pos.x > screen.get_width() +8 :
         ball_right = False
 
 
