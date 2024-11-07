@@ -18,6 +18,7 @@ ball_origin = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 ball_pos = pygame.Vector2(ball_origin.x, ball_origin.y)
 ball_up = True
 ball_right = True
+ball_side = True
 
 
 while running:
@@ -46,6 +47,10 @@ while running:
         ball_up = False
     if ball_pos.y > screen.get_height() -8 :
         ball_up = True
+    
+
+    if ball_side :
+        ball_pos.x -= 2
 
 
 
