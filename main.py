@@ -9,11 +9,11 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 
-#player positioning
+# player positioning
 player1_pos = pygame.Vector2(screen.get_width() * 14/15, screen.get_height() / 2)
 player2_pos = pygame.Vector2(screen.get_width() * 1/15, screen.get_height() / 2)
 
-#ball setup
+# ball setup
 ball_origin = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 ball_pos = pygame.Vector2(ball_origin.x, ball_origin.y)
 ball_up = True
@@ -33,7 +33,7 @@ while running:
 
 
 
-    #Pong ball
+    # pong ball
     ball = pygame.Surface((16,16))
     ball.fill("white")
     screen.blit(ball, (ball_pos.x -8, ball_pos.y -8))
@@ -64,7 +64,7 @@ while running:
 
 
 
-    #player1
+    # player1
     player1 = pygame.Surface((10,160))
     player1.fill("cyan")
     screen.blit(player1, (player1_pos.x, player1_pos.y - 80))
@@ -77,7 +77,7 @@ while running:
 
 
     
-    #player2
+    # player2
     player2 = pygame.Surface((10,160))
     player2.fill("orange")
     screen.blit(player2, (player2_pos.x -10, player2_pos.y - 80))
