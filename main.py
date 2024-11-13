@@ -39,22 +39,26 @@ while running:
     screen.blit(ball, (ball_pos.x -8, ball_pos.y -8))
     
     if ball_up :
-        ball_pos.y -= 2
+        ball_pos.y -= 2 * ball_speed
     else :
-        ball_pos.y += 2
+        ball_pos.y += 2 * ball_speed
     
     if ball_pos.y < 8 :
         ball_up = False
+        ball_speed += 0.2
+
     if ball_pos.y > screen.get_height() -8 :
         ball_up = True
+        ball_speed += 0.2
     
     if ball_side :
-        ball_pos.x -= 2
+        ball_pos.x -= 2 * ball_speed
     else :
-        ball_pos.x += 2
+        ball_pos.x += 2 * ball_speed
     
     if ball_pos.x < -8 :
         ball_side = False
+
     if ball_pos.x > screen.get_width() +8 :
         ball_side = True
 
