@@ -18,6 +18,7 @@ ball_origin = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 ball_pos = pygame.Vector2(ball_origin.x, ball_origin.y)
 ball_up = True
 ball_side = True
+ball_speed = 1
 
 
 while running:
@@ -65,9 +66,9 @@ while running:
     screen.blit(player1, (player1_pos.x, player1_pos.y - 80))
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP]:
+    if keys[pygame.K_UP] and player1_pos.y > 80 :
         player1_pos.y -= 500 * dt
-    if keys[pygame.K_DOWN]:
+    if keys[pygame.K_DOWN] and player1_pos.y < 640 :
         player1_pos.y += 500 * dt
 
 
@@ -75,12 +76,12 @@ while running:
     #player2
     player2 = pygame.Surface((10,160))
     player2.fill("orange")
-    screen.blit(player2, (player2_pos.x, player2_pos.y - 80))
+    screen.blit(player2, (player2_pos.x -10, player2_pos.y - 80))
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
+    if keys[pygame.K_w] and player2_pos.y > 80 :
         player2_pos.y -= 500 * dt
-    if keys[pygame.K_s]:
+    if keys[pygame.K_s] and player2_pos.y < 640 :
         player2_pos.y += 500 * dt
 
     
