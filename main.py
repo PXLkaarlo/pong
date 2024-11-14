@@ -67,26 +67,36 @@ while running:
     # player1
     player1 = pygame.Surface((10,160))
     player1.fill("cyan")
-    screen.blit(player1, (player1_pos.x, player1_pos.y - 80))
+    screen.blit(player1, (player1_pos.x, player1_pos.y))
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP] and player1_pos.y > 80 :
+    if keys[pygame.K_UP] and player1_pos.y >0:
         player1_pos.y -= 500 * dt
-    if keys[pygame.K_DOWN] and player1_pos.y < 640 :
+    if keys[pygame.K_DOWN] and player1_pos.y < 560 :
         player1_pos.y += 500 * dt
+    
+
+    # ball collision with player1
+    if ball_pos.x > player1_pos.x -8 and ball_pos.x < player1_pos.x +10 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +160 :
+        ball_side = True
 
 
     
     # player2
     player2 = pygame.Surface((10,160))
     player2.fill("orange")
-    screen.blit(player2, (player2_pos.x -10, player2_pos.y - 80))
+    screen.blit(player2, (player2_pos.x -10, player2_pos.y))
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w] and player2_pos.y > 80 :
+    if keys[pygame.K_w] and player2_pos.y > 0 :
         player2_pos.y -= 500 * dt
-    if keys[pygame.K_s] and player2_pos.y < 640 :
+    if keys[pygame.K_s] and player2_pos.y < 560 :
         player2_pos.y += 500 * dt
+    
+
+    # ball collision with player2
+    if ball_pos.x > player2_pos.x -10 and ball_pos.x < player2_pos.x +8 and ball_pos.y > player2_pos.y and ball_pos.y < player2_pos.y +160 :
+        ball_side = False
 
     
 
