@@ -1,6 +1,9 @@
 # Example file showing a basic pygame "game loop"
 import pygame
 
+# random number genorator setup
+import random
+
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
@@ -77,17 +80,21 @@ while running:
     
 
     # ball collision with player1
-    if ball_pos.x > player1_pos.x -8 and ball_pos.x < player1_pos.x +10 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +160 :
+    ball_p1_collide = ball_pos.x > player1_pos.x -8 and ball_pos.x < player1_pos.x +10 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +160
+    
+    if ball_p1_collide and keys[pygame.K_LEFT] :
         ball_side = True
-
+        ball_up = True
+    elif ball_p1_collide :
+        ball_side = True
+        ball_up = False
 
     
     # player2
     player2 = pygame.Surface((10,160))
     player2.fill("orange")
     screen.blit(player2, (player2_pos.x -10, player2_pos.y))
-
-    keys = pygame.key.get_pressed()
+    
     if keys[pygame.K_w] and player2_pos.y > 0 :
         player2_pos.y -= 500 * dt
     if keys[pygame.K_s] and player2_pos.y < 560 :
@@ -95,8 +102,14 @@ while running:
     
 
     # ball collision with player2
-    if ball_pos.x > player2_pos.x -10 and ball_pos.x < player2_pos.x +8 and ball_pos.y > player2_pos.y and ball_pos.y < player2_pos.y +160 :
+    ball_p2_collide = ball_pos.x > player2_pos.x -10 and ball_pos.x < player2_pos.x +8 and ball_pos.y > player2_pos.y and ball_pos.y < player2_pos.y +160
+
+    if ball_p2_collide and keys[pygame.K_d] :
         ball_side = False
+        ball_up = True
+    elif ball_p2_collide :
+        ball_side = False
+        ball_up = False
 
     
 
