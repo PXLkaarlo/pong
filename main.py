@@ -19,9 +19,21 @@ player2_pos = pygame.Vector2(screen.get_width() * 1/15, screen.get_height() / 2)
 # ball setup
 ball_origin = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 ball_pos = pygame.Vector2(ball_origin.x, ball_origin.y)
-ball_up = True
-ball_side = True
 ball_speed = 1
+
+starting_direction = random.choice([1, 2, 3, 4])
+if starting_direction == 1 : 
+    ball_up = True
+    ball_side = True
+elif starting_direction == 2 :
+    ball_up = True
+    ball_side = False
+elif starting_direction == 3 :
+    ball_up = False
+    ball_side = True
+elif starting_direction == 4 :
+    ball_up = False
+    ball_side = False
 
 
 while running:
@@ -36,11 +48,12 @@ while running:
 
 
 
-    # pong ball
+    # ball object
     ball = pygame.Surface((16,16))
     ball.fill("white")
     screen.blit(ball, (ball_pos.x -8, ball_pos.y -8))
     
+
     if ball_up :
         ball_pos.y -= 2 * ball_speed
     else :
