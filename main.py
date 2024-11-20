@@ -21,6 +21,7 @@ ball_origin = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 ball_pos = pygame.Vector2(ball_origin.x, ball_origin.y)
 ball_speed = 1
 
+# Randomiser for starting direction
 starting_direction = random.choice([1, 2, 3, 4])
 if starting_direction == 1 : 
     ball_up = True
