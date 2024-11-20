@@ -94,7 +94,7 @@ while running:
     
 
     # ball collision with player1
-    ball_p1_collide = ball_pos.x > player1_pos.x -8 and ball_pos.x < player1_pos.x +10 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +160
+    ball_p1_collide = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +16 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +160
     
     if ball_p1_collide and keys[pygame.K_LEFT] :
         ball_side = True
@@ -116,7 +116,7 @@ while running:
     
 
     # ball collision with player2
-    ball_p2_collide = ball_pos.x > player2_pos.x -10 and ball_pos.x < player2_pos.x +8 and ball_pos.y > player2_pos.y and ball_pos.y < player2_pos.y +160
+    ball_p2_collide = ball_pos.x > player2_pos.x -16 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y and ball_pos.y < player2_pos.y +160
 
     if ball_p2_collide and keys[pygame.K_d] :
         ball_side = False
