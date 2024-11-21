@@ -32,7 +32,7 @@ elif starting_direction == 2 :
 elif starting_direction == 3 :
     ball_up = False
     ball_side = True
-elif starting_direction == 4 :
+else :
     ball_up = False
     ball_side = False
 
@@ -93,15 +93,25 @@ while running:
         player1_pos.y += 500 * dt
     
 
-    # ball collision with player1
-    ball_p1_collide = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +160
-    
-    if ball_p1_collide and keys[pygame.K_LEFT] :
+    # setting up top and bottom collision boxes for player1
+    ball_p1_top_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +80
+    ball_p1_bottom_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y +80 and ball_pos.y < player1_pos.y +160
+    overlap_decider = random.choice([1,2])
+
+    if ball_p1_top_collision and ball_p1_bottom_collision :
+        if overlap_decider == 1 :
+            ball_side = True
+            ball_up = True
+        else :
+            ball_side = True
+            ball_up = False
+    elif ball_p1_top_collision :
         ball_side = True
         ball_up = True
-    elif ball_p1_collide :
+    elif ball_p1_bottom_collision :
         ball_side = True
         ball_up = False
+
 
     
     # player2
@@ -116,12 +126,20 @@ while running:
     
 
     # ball collision with player2
-    ball_p2_collide = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y and ball_pos.y < player2_pos.y +160
+    ball_p2_top_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y and ball_pos.y < player2_pos.y +80
+    ball_p2_bottom_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y +80 and ball_pos.y < player2_pos.y +160
 
-    if ball_p2_collide and keys[pygame.K_d] :
+    if ball_p2_top_collision and ball_p2_bottom_collision :
+        if overlap_decider == 1 :
+            ball_side = False
+            ball_up = True
+        else :
+            ball_side = False
+            ball_up = False
+    elif ball_p2_top_collision :
         ball_side = False
         ball_up = True
-    elif ball_p2_collide :
+    elif ball_p2_bottom_collision :
         ball_side = False
         ball_up = False
 
