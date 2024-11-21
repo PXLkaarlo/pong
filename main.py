@@ -100,16 +100,8 @@ while running:
     # setting up top and bottom collision boxes for player1
     ball_p1_top_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +80
     ball_p1_bottom_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y +80 and ball_pos.y < player1_pos.y +160
-    overlap_solver = random.choice([1,2])
 
-    if ball_p1_top_collision and ball_p1_bottom_collision :
-        if overlap_solver == 1 :
-            ball_side = True
-            ball_up = True
-        else :
-            ball_side = True
-            ball_up = False
-    elif ball_p1_top_collision :
+    if ball_p1_top_collision :
         ball_side = True
         ball_up = True
     elif ball_p1_bottom_collision :
@@ -133,14 +125,7 @@ while running:
     ball_p2_top_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y and ball_pos.y < player2_pos.y +80
     ball_p2_bottom_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y +80 and ball_pos.y < player2_pos.y +160
 
-    if ball_p2_top_collision and ball_p2_bottom_collision :
-        if overlap_solver == 1 :
-            ball_side = False
-            ball_up = True
-        else :
-            ball_side = False
-            ball_up = False
-    elif ball_p2_top_collision :
+    if ball_p2_top_collision :
         ball_side = False
         ball_up = True
     elif ball_p2_bottom_collision :
