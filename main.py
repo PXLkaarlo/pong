@@ -53,6 +53,8 @@ while running:
     ball = pygame.Surface((16,16))
     ball.fill("white")
     screen.blit(ball, (ball_pos.x -8, ball_pos.y -8))
+
+    max_ball_speed = 10
     
 
     if ball_up :
@@ -62,11 +64,13 @@ while running:
     
     if ball_pos.y < 8 :
         ball_up = False
-        ball_speed += 0.2
+        if ball_speed <= max_ball_speed :
+            ball_speed += 0.2
 
     if ball_pos.y > screen.get_height() -8 :
         ball_up = True
-        ball_speed += 0.2
+        if ball_speed <= max_ball_speed :
+            ball_speed += 0.2
     
     if ball_side :
         ball_pos.x -= 2 * ball_speed
