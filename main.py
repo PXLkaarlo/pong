@@ -19,22 +19,26 @@ player2_pos = pygame.Vector2(screen.get_width() * 1/15, screen.get_height() / 2)
 # ball setup
 ball_origin = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 ball_pos = pygame.Vector2(ball_origin.x, ball_origin.y)
-ball_speed = 1
+ball_org_speed = 3
+ball_vert_speed = 1
+ball_horz_speed = 1
+max_vert_speed = 16
+max_horz_speed = 12
 
 # Randomiser for starting direction
 starting_direction = random.choice([1, 2, 3, 4])
 if starting_direction == 1 : 
     ball_up = True
-    ball_side = True
+    ball_left = True
 elif starting_direction == 2 :
     ball_up = True
-    ball_side = False
+    ball_left = False
 elif starting_direction == 3 :
     ball_up = False
-    ball_side = True
+    ball_left = True
 else :
     ball_up = False
-    ball_side = False
+    ball_left = False
 
 
 while running:
@@ -54,34 +58,32 @@ while running:
     ball.fill("white")
     screen.blit(ball, (ball_pos.x -8, ball_pos.y -8))
 
-    max_ball_speed = 10
-    
+    if ball_vert_speed >= 2 :
+        ball_org_speed = 2
 
     if ball_up :
-        ball_pos.y -= 2 * ball_speed
+        ball_pos.y -= ball_org_speed * ball_vert_speed
     else :
-        ball_pos.y += 2 * ball_speed
+        ball_pos.y += ball_org_speed * ball_vert_speed
     
-    if ball_pos.y < 8 :
+    if ball_pos.y <= 8 :
         ball_up = False
-        if ball_speed <= max_ball_speed :
-            ball_speed += 0.2
+        ball_vert_speed += 0.1
 
     if ball_pos.y > screen.get_height() -8 :
         ball_up = True
-        if ball_speed <= max_ball_speed :
-            ball_speed += 0.2
+        ball_vert_speed += 0.1
     
-    if ball_side :
-        ball_pos.x -= 2 * ball_speed
+    if ball_left :
+        ball_pos.x -= ball_org_speed * ball_horz_speed
     else :
-        ball_pos.x += 2 * ball_speed
+        ball_pos.x += ball_org_speed * ball_horz_speed
     
-    if ball_pos.x < -8 :
-        ball_side = False
+    if ball_pos.x <= -8 :
+        ball_left = False
 
-    if ball_pos.x > screen.get_width() +8 :
-        ball_side = True
+    if ball_pos.x >= screen.get_width() +8 :
+        ball_left = True
 
 
 
@@ -102,11 +104,15 @@ while running:
     ball_p1_bottom_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y +80 and ball_pos.y < player1_pos.y +160
 
     if ball_p1_top_collision :
-        ball_side = True
+        ball_left = True
         ball_up = True
+        if ball_horz_speed <= max_horz_speed :
+            ball_horz_speed += 0.2
     elif ball_p1_bottom_collision :
-        ball_side = True
+        ball_left = True
         ball_up = False
+        if ball_horz_speed <= max_horz_speed :
+            ball_horz_speed += 0.2
 
 
     
@@ -126,11 +132,15 @@ while running:
     ball_p2_bottom_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y +80 and ball_pos.y < player2_pos.y +160
 
     if ball_p2_top_collision :
-        ball_side = False
+        ball_left = False
         ball_up = True
+        if ball_horz_speed <= max_horz_speed :
+            ball_horz_speed += 0.2
     elif ball_p2_bottom_collision :
-        ball_side = False
+        ball_left = False
         ball_up = False
+        if ball_horz_speed <= max_horz_speed :
+            ball_horz_speed += 0.2
 
     
 
