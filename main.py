@@ -9,8 +9,10 @@ pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Pong_prototype")
 clock = pygame.time.Clock()
-running = True
 dt = 0
+running = True
+game_active = False
+
 
 # player positioning
 player1_pos = pygame.Vector2(screen.get_width() * 14/15, screen.get_height() / 2)
@@ -21,7 +23,7 @@ ball_origin = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 ball_pos = pygame.Vector2(ball_origin.x, ball_origin.y)
 ball_speed = 1
 
-# Randomiser for starting direction
+# randomiser for starting direction
 starting_direction = random.choice([1, 2, 3, 4])
 if starting_direction == 1 : 
     ball_up = True
@@ -39,115 +41,118 @@ else :
 
 while running:
     # poll for events
+    keys = pygame.key.get_pressed()
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    
+    funny = pygame.image.load("kekw-emote.jpg")
+    centriliser = pygame.Vector2(screen.get_width() /2, screen.get_height() /2)
+    screen.blit(funny, (centriliser.x - 100, centriliser.y - 100))
 
-    # fill the screen with a color to wipe away anything from last frame
-    screen.fill("black")
+    if game_active == False :
+        ball_pos.x = ball_origin.x
+        ball_pos.y = ball_origin.y
 
-
-
-    # ball object
-    ball = pygame.Surface((16,16))
-    ball.fill("white")
-    screen.blit(ball, (ball_pos.x -8, ball_pos.y -8))
-
-    max_ball_speed = 10
+    if keys[pygame.K_SPACE] :
+        game_active = True
     
 
-    if ball_up :
-        ball_pos.y -= 2 * ball_speed
-    else :
-        ball_pos.y += 2 * ball_speed
-    
-    if ball_pos.y < 8 :
-        ball_up = False
-        if ball_speed <= max_ball_speed :
-            ball_speed += 0.2
-
-    if ball_pos.y > screen.get_height() -8 :
-        ball_up = True
-        if ball_speed <= max_ball_speed :
-            ball_speed += 0.2
-    
-    if ball_side :
-        ball_pos.x -= 2 * ball_speed
-    else :
-        ball_pos.x += 2 * ball_speed
-    
-    if ball_pos.x < -8 :
-        ball_side = False
-
-    if ball_pos.x > screen.get_width() +8 :
-        ball_side = True
+    if game_active :
+        # fill the screen with a color to wipe away anything from last frame
+        screen.fill("black")
 
 
 
-    # player1
-    player1 = pygame.Surface((10,160))
-    player1.fill("cyan")
-    screen.blit(player1, (player1_pos.x, player1_pos.y))
+        # ball object
+        ball = pygame.Surface((16,16))
+        ball.fill("white")
+        screen.blit(ball, (ball_pos.x -8, ball_pos.y -8))
 
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP] and player1_pos.y >0:
-        player1_pos.y -= 500 * dt
-    if keys[pygame.K_DOWN] and player1_pos.y < 560 :
-        player1_pos.y += 500 * dt
-    
+        max_ball_speed = 10
+        
 
-    # setting up top and bottom collision boxes for player1
-    ball_p1_top_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +80
-    ball_p1_bottom_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y +80 and ball_pos.y < player1_pos.y +160
-    overlap_solver = random.choice([1,2])
+        if ball_up :
+            ball_pos.y -= 2 * ball_speed
+        else :
+            ball_pos.y += 2 * ball_speed
+        
+        if ball_pos.y < 8 :
+            ball_up = False
+            if ball_speed <= max_ball_speed :
+                ball_speed += 0.2
 
-    if ball_p1_top_collision and ball_p1_bottom_collision :
-        if overlap_solver == 1 :
+        if ball_pos.y > screen.get_height() -8 :
+            ball_up = True
+            if ball_speed <= max_ball_speed :
+                ball_speed += 0.2
+        
+        if ball_side :
+            ball_pos.x -= 2 * ball_speed
+        else :
+            ball_pos.x += 2 * ball_speed
+        
+        if ball_pos.x < -8 :
+            ball_side = False
+            game_active = False
+
+        if ball_pos.x > screen.get_width() +8 :
+            ball_side = True
+            game_active = False
+
+
+
+        # player1
+        player1 = pygame.Surface((10,160))
+        player1.fill("cyan")
+        screen.blit(player1, (player1_pos.x, player1_pos.y))
+
+        if keys[pygame.K_UP] and player1_pos.y >0:
+            player1_pos.y -= 500 * dt
+        if keys[pygame.K_DOWN] and player1_pos.y < 560 :
+            player1_pos.y += 500 * dt
+        
+
+        # setting up top and bottom collision boxes for player1
+        ball_p1_top_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +80
+        ball_p1_bottom_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y +80 and ball_pos.y < player1_pos.y +160
+        overlap_solver = random.choice([1,2])
+
+        if ball_p1_top_collision :
             ball_side = True
             ball_up = True
-        else :
+        elif ball_p1_bottom_collision :
             ball_side = True
             ball_up = False
-    elif ball_p1_top_collision :
-        ball_side = True
-        ball_up = True
-    elif ball_p1_bottom_collision :
-        ball_side = True
-        ball_up = False
 
 
-    
-    # player2
-    player2 = pygame.Surface((10,160))
-    player2.fill("orange")
-    screen.blit(player2, (player2_pos.x -10, player2_pos.y))
-    
-    if keys[pygame.K_w] and player2_pos.y > 0 :
-        player2_pos.y -= 500 * dt
-    if keys[pygame.K_s] and player2_pos.y < 560 :
-        player2_pos.y += 500 * dt
-    
+        
+        # player2
+        player2 = pygame.Surface((10,160))
+        player2.fill("orange")
+        screen.blit(player2, (player2_pos.x -10, player2_pos.y))
+        
+        if keys[pygame.K_w] and player2_pos.y > 0 :
+            player2_pos.y -= 500 * dt
+        if keys[pygame.K_s] and player2_pos.y < 560 :
+            player2_pos.y += 500 * dt
+        
 
-    # ball collision with player2
-    ball_p2_top_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y and ball_pos.y < player2_pos.y +80
-    ball_p2_bottom_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y +80 and ball_pos.y < player2_pos.y +160
+        # ball collision with player2
+        ball_p2_top_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y and ball_pos.y < player2_pos.y +80
+        ball_p2_bottom_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y +80 and ball_pos.y < player2_pos.y +160
 
-    if ball_p2_top_collision and ball_p2_bottom_collision :
-        if overlap_solver == 1 :
+        if ball_p2_top_collision :
             ball_side = False
             ball_up = True
-        else :
+        elif ball_p2_bottom_collision :
             ball_side = False
             ball_up = False
-    elif ball_p2_top_collision :
-        ball_side = False
-        ball_up = True
-    elif ball_p2_bottom_collision :
-        ball_side = False
-        ball_up = False
+        
+        # gameloop done
 
-    
+        
 
 
     # flip() the display to put your work on screen
