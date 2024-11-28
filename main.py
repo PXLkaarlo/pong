@@ -59,7 +59,6 @@ while running:
         ball_pos.x = ball_origin.x
         ball_pos.y = ball_origin.y
 
-<<<<<<< HEAD
     if keys[pygame.K_SPACE] :
         game_active = True
     
@@ -67,41 +66,6 @@ while running:
     if game_active :
         # fill the screen with a color to wipe away anything from last frame
         screen.fill("black")
-=======
-
-
-    # ball object
-    ball = pygame.Surface((16,16))
-    ball.fill("white")
-    screen.blit(ball, (ball_pos.x -8, ball_pos.y -8))
-
-    if ball_vert_speed >= 2 :
-        ball_org_speed = 2
-
-    if ball_up :
-        ball_pos.y -= ball_org_speed * ball_vert_speed
-    else :
-        ball_pos.y += ball_org_speed * ball_vert_speed
-    
-    if ball_pos.y <= 8 :
-        ball_up = False
-        ball_vert_speed += 0.1
-
-    if ball_pos.y > screen.get_height() -8 :
-        ball_up = True
-        ball_vert_speed += 0.1
-    
-    if ball_left :
-        ball_pos.x -= ball_org_speed * ball_horz_speed
-    else :
-        ball_pos.x += ball_org_speed * ball_horz_speed
-    
-    if ball_pos.x <= -8 :
-        ball_left = False
-
-    if ball_pos.x >= screen.get_width() +8 :
-        ball_left = True
->>>>>>> 86bc0022047e65981adbc2d9ad00c250be70348b
 
 
 
@@ -113,33 +77,32 @@ while running:
         max_ball_speed = 10
         
 
-<<<<<<< HEAD
         if ball_up :
-            ball_pos.y -= 2 * ball_speed
+            ball_pos.y -= 2 * ball_vert_speed
         else :
-            ball_pos.y += 2 * ball_speed
+            ball_pos.y += 2 * ball_vert_speed
         
         if ball_pos.y < 8 :
             ball_up = False
-            if ball_speed <= max_ball_speed :
-                ball_speed += 0.2
+            if ball_vert_speed <= max_ball_speed :
+                ball_vert_speed += 0.2
 
         if ball_pos.y > screen.get_height() -8 :
             ball_up = True
-            if ball_speed <= max_ball_speed :
-                ball_speed += 0.2
+            if ball_vert_speed <= max_ball_speed :
+                ball_vert_speed += 0.2
         
-        if ball_side :
-            ball_pos.x -= 2 * ball_speed
+        if ball_left :
+            ball_pos.x -= 2 * ball_horz_speed
         else :
-            ball_pos.x += 2 * ball_speed
+            ball_pos.x += 2 * ball_horz_speed
         
         if ball_pos.x < -8 :
-            ball_side = False
+            ball_left = False
             game_active = False
 
         if ball_pos.x > screen.get_width() +8 :
-            ball_side = True
+            ball_left = True
             game_active = False
 
 
@@ -158,30 +121,13 @@ while running:
         # setting up top and bottom collision boxes for player1
         ball_p1_top_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +80
         ball_p1_bottom_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y +80 and ball_pos.y < player1_pos.y +160
-        overlap_solver = random.choice([1,2])
 
         if ball_p1_top_collision :
-            ball_side = True
+            ball_left = True
             ball_up = True
         elif ball_p1_bottom_collision :
-            ball_side = True
+            ball_left = True
             ball_up = False
-=======
-    # setting up top and bottom collision boxes for player1
-    ball_p1_top_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +80
-    ball_p1_bottom_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y +80 and ball_pos.y < player1_pos.y +160
-
-    if ball_p1_top_collision :
-        ball_left = True
-        ball_up = True
-        if ball_horz_speed <= max_horz_speed :
-            ball_horz_speed += 0.2
-    elif ball_p1_bottom_collision :
-        ball_left = True
-        ball_up = False
-        if ball_horz_speed <= max_horz_speed :
-            ball_horz_speed += 0.2
->>>>>>> 86bc0022047e65981adbc2d9ad00c250be70348b
 
 
         
@@ -200,27 +146,14 @@ while running:
         ball_p2_top_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y and ball_pos.y < player2_pos.y +80
         ball_p2_bottom_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y +80 and ball_pos.y < player2_pos.y +160
 
-<<<<<<< HEAD
         if ball_p2_top_collision :
-            ball_side = False
+            ball_left = False
             ball_up = True
         elif ball_p2_bottom_collision :
-            ball_side = False
+            ball_left = False
             ball_up = False
         
         # gameloop done
-=======
-    if ball_p2_top_collision :
-        ball_left = False
-        ball_up = True
-        if ball_horz_speed <= max_horz_speed :
-            ball_horz_speed += 0.2
-    elif ball_p2_bottom_collision :
-        ball_left = False
-        ball_up = False
-        if ball_horz_speed <= max_horz_speed :
-            ball_horz_speed += 0.2
->>>>>>> 86bc0022047e65981adbc2d9ad00c250be70348b
 
         
 
