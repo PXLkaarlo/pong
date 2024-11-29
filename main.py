@@ -15,8 +15,8 @@ game_active = False
 
 
 # player positioning
-player1_pos = pygame.Vector2(screen.get_width() * 14/15, screen.get_height() / 2)
-player2_pos = pygame.Vector2(screen.get_width() * 1/15, screen.get_height() / 2)
+player1_pos = pygame.Vector2(screen.get_width() * 14/15, (screen.get_height() / 2) -80)
+player2_pos = pygame.Vector2(screen.get_width() * 1/15, (screen.get_height() / 2) -80)
 
 # ball setup
 ball_origin = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
@@ -73,8 +73,6 @@ while running:
         ball = pygame.Surface((16,16))
         ball.fill("white")
         screen.blit(ball, (ball_pos.x -8, ball_pos.y -8))
-
-        max_ball_speed = 10
         
 
         if ball_up :
@@ -84,13 +82,13 @@ while running:
         
         if ball_pos.y < 8 :
             ball_up = False
-            if ball_vert_speed <= max_ball_speed :
-                ball_vert_speed += 0.2
+            if ball_vert_speed <= max_vert_speed :
+                ball_vert_speed += 0.1
 
         if ball_pos.y > screen.get_height() -8 :
             ball_up = True
-            if ball_vert_speed <= max_ball_speed :
-                ball_vert_speed += 0.2
+            if ball_vert_speed <= max_vert_speed :
+                ball_vert_speed += 0.1
         
         if ball_left :
             ball_pos.x -= 2 * ball_horz_speed
@@ -125,10 +123,13 @@ while running:
         if ball_p1_top_collision :
             ball_left = True
             ball_up = True
+            if ball_horz_speed <= max_horz_speed :
+                ball_horz_speed += 0.2
         elif ball_p1_bottom_collision :
             ball_left = True
             ball_up = False
-
+            if ball_horz_speed <= max_horz_speed :
+                ball_horz_speed += 0.2
 
         
         # player2
@@ -149,11 +150,15 @@ while running:
         if ball_p2_top_collision :
             ball_left = False
             ball_up = True
+            if ball_horz_speed <= max_horz_speed :
+                ball_horz_speed += 0.2
         elif ball_p2_bottom_collision :
             ball_left = False
             ball_up = False
+            if ball_horz_speed <= max_horz_speed :
+                ball_horz_speed += 0.2
         
-        # gameloop done
+        # end of gameloop
 
         
 
