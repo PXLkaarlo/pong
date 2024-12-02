@@ -1,15 +1,10 @@
-# Example file showing a basic pygame "game loop"
-import pygame
-
-# random number genorator setup
-import random
+import pygame, random
 
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Pong_prototype")
 clock = pygame.time.Clock()
-dt = 0
 running = True
 game_active = False
 
@@ -52,8 +47,8 @@ while running:
             running = False
     
     funny = pygame.image.load("kekw-emote.jpg")
-    centriliser = pygame.Vector2(screen.get_width() /2, screen.get_height() /2)
-    screen.blit(funny, (centriliser.x - 100, centriliser.y - 100))
+    centraliser = pygame.Vector2(screen.get_width() /2, screen.get_height() /2)
+    screen.blit(funny, (centraliser.x - 100, centraliser.y - 100))
 
     if game_active == False :
         ball_pos.x = ball_origin.x
