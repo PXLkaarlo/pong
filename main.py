@@ -7,7 +7,11 @@ pygame.display.set_caption("Pong_prototype")
 clock = pygame.time.Clock()
 running = True
 game_active = False
-
+game_font = pygame.font.Font(None,150)
+score_p1 = 0
+score_p2 = 0
+line_bs = pygame.Surface((100,10))
+line_bs.fill ("white")
 
 # player positioning
 player1_pos = pygame.Vector2(screen.get_width() * 14/15, (screen.get_height() / 2) -80)
@@ -46,9 +50,17 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     
+    screen.fill("grey")
     funny = pygame.image.load("kekw-emote.jpg")
-    centraliser = pygame.Vector2(screen.get_width() /2, screen.get_height() /2)
-    screen.blit(funny, (centraliser.x - 100, centraliser.y - 100))
+    screen.blit(funny, ((screen.get_width() /2) - 100, (screen.get_height() /2) - 100))
+
+
+    score_p1_surf = game_font.render(f"{score_p1}", False, "cyan")
+    score_p2_surf = game_font.render(f"{score_p2}", False, "orange")
+
+    screen.blit(score_p1_surf, (screen.get_width() * 10/15 ,100))
+    screen.blit(score_p2_surf, (screen.get_width() * 5/15 ,100))
+    
 
     if game_active == False :
         ball_pos.x = ball_origin.x
@@ -62,6 +74,9 @@ while running:
         # fill the screen with a color to wipe away anything from last frame
         screen.fill("black")
 
+        screen.blit(score_p1_surf, (screen.get_width() * 10/15 ,100))
+        screen.blit(line_bs, ((screen.get_width() /2) -50, 100))
+        screen.blit(score_p2_surf, (screen.get_width() * 5/15 ,100))
 
 
         # ball object
@@ -93,10 +108,12 @@ while running:
         if ball_pos.x < -8 :
             ball_left = False
             game_active = False
+            score_p1 += 1
 
         if ball_pos.x > screen.get_width() +8 :
             ball_left = True
             game_active = False
+            score_p2 += 1
 
 
 
@@ -109,7 +126,7 @@ while running:
             player1_pos.y -= 500 * dt
         if keys[pygame.K_DOWN] and player1_pos.y < 560 :
             player1_pos.y += 500 * dt
-        
+
 
         # setting up top and bottom collision boxes for player1
         ball_p1_top_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +80
