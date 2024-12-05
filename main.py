@@ -7,11 +7,12 @@ pygame.display.set_caption("Pong_prototype")
 clock = pygame.time.Clock()
 running = True
 game_active = False
-game_font = pygame.font.Font(None,150)
+game_font = pygame.font.Font("minecraftRegularBmg3.otf",150)
 score_p1 = 0
 score_p2 = 0
-line_bs = pygame.Surface((100,10))
-line_bs.fill ("white")
+score_p1_pos = screen.get_width() * 10/15
+hyphen = pygame.Surface((100,10))
+hyphen.fill ("white")
 
 # player positioning
 player1_pos = pygame.Vector2(screen.get_width() * 14/15, (screen.get_height() / 2) -80)
@@ -58,9 +59,13 @@ while running:
     score_p1_surf = game_font.render(f"{score_p1}", False, "cyan")
     score_p2_surf = game_font.render(f"{score_p2}", False, "orange")
 
-    screen.blit(score_p1_surf, (screen.get_width() * 10/15 ,100))
-    screen.blit(score_p2_surf, (screen.get_width() * 5/15 ,100))
-    
+    # score_p1_rect = score_p1_surf
+
+    screen.blit(score_p1_surf, (score_p1_pos ,100))
+    screen.blit(score_p2_surf, (screen.get_width() * 4/15 ,100))
+
+    if score_p1 >= 2 and score_p1_pos :
+        score_p1_pos -= 1/15
 
     if game_active == False :
         ball_pos.x = ball_origin.x
@@ -74,9 +79,9 @@ while running:
         # fill the screen with a color to wipe away anything from last frame
         screen.fill("black")
 
-        screen.blit(score_p1_surf, (screen.get_width() * 10/15 ,100))
-        screen.blit(line_bs, ((screen.get_width() /2) -50, 100))
-        screen.blit(score_p2_surf, (screen.get_width() * 5/15 ,100))
+        screen.blit(score_p1_surf, (score_p1_pos ,100))
+        screen.blit(hyphen, ((screen.get_width() /2) -50, 175))
+        screen.blit(score_p2_surf, (screen.get_width() * 4/15 ,100))
 
 
         # ball object
