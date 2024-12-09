@@ -7,12 +7,15 @@ pygame.display.set_caption("Pong_prototype")
 clock = pygame.time.Clock()
 running = True
 game_active = False
-game_font = pygame.font.Font("minecraftRegularBmg3.otf",150)
+game_font = pygame.font.Font("minecraftRegularBmg3.otf", 150)
+tutorial_font = pygame.font.Font("minecraftRegularBmg3.otf", 50)
 score_p1 = 0
 score_p2 = 0
-score_p1_pos = screen.get_width() * 10/15
+score_p1_pos = screen.get_width() * 11/15
 hyphen = pygame.Surface((100,10))
 hyphen.fill ("white")
+title_surf = game_font.render("PYPONG", False, "white")
+tutorial = tutorial_font.render("stuff hghghghhggggghghghghgghghghghghghgghghhgghg", False, "white")
 
 # player positioning
 player1_pos = pygame.Vector2(screen.get_width() * 14/15, (screen.get_height() / 2) -80)
@@ -51,21 +54,19 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     
-    screen.fill("grey")
-    funny = pygame.image.load("kekw-emote.jpg")
-    screen.blit(funny, ((screen.get_width() /2) - 100, (screen.get_height() /2) - 100))
+    screen.fill("dimgrey")
+    screen.blit(title_surf, (375,260))
+    screen.blit(tutorial, (100,600))
 
 
     score_p1_surf = game_font.render(f"{score_p1}", False, "cyan")
     score_p2_surf = game_font.render(f"{score_p2}", False, "orange")
 
-    # score_p1_rect = score_p1_surf
+    score_p1_rect = score_p1_surf.get_rect(topright = (score_p1_pos, 100))
 
-    screen.blit(score_p1_surf, (score_p1_pos ,100))
+    screen.blit(score_p1_surf, score_p1_rect)
     screen.blit(score_p2_surf, (screen.get_width() * 4/15 ,100))
 
-    if score_p1 >= 2 and score_p1_pos :
-        score_p1_pos -= 1/15
 
     if game_active == False :
         ball_pos.x = ball_origin.x
@@ -79,9 +80,9 @@ while running:
         # fill the screen with a color to wipe away anything from last frame
         screen.fill("black")
 
-        screen.blit(score_p1_surf, (score_p1_pos ,100))
+        screen.blit(score_p1_surf, score_p1_rect)
         screen.blit(hyphen, ((screen.get_width() /2) -50, 175))
-        screen.blit(score_p2_surf, (screen.get_width() * 4/15 ,100))
+        screen.blit(score_p2_surf, (screen.get_width() * 4/15, 100))
 
 
         # ball object
@@ -137,12 +138,12 @@ while running:
         ball_p1_top_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y and ball_pos.y < player1_pos.y +80
         ball_p1_bottom_collision = ball_pos.x > player1_pos.x -10 and ball_pos.x < player1_pos.x +18 and ball_pos.y > player1_pos.y +80 and ball_pos.y < player1_pos.y +160
 
-        if ball_p1_top_collision :
+        if ball_p1_top_collision and ball_left == False :
             ball_left = True
             ball_up = True
             if ball_horz_speed <= max_horz_speed :
                 ball_horz_speed += 0.2
-        elif ball_p1_bottom_collision :
+        elif ball_p1_bottom_collision and ball_left == False :
             ball_left = True
             ball_up = False
             if ball_horz_speed <= max_horz_speed :
@@ -164,12 +165,12 @@ while running:
         ball_p2_top_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y and ball_pos.y < player2_pos.y +80
         ball_p2_bottom_collision = ball_pos.x > player2_pos.x -18 and ball_pos.x < player2_pos.x +10 and ball_pos.y > player2_pos.y +80 and ball_pos.y < player2_pos.y +160
 
-        if ball_p2_top_collision :
+        if ball_p2_top_collision and ball_left :
             ball_left = False
             ball_up = True
             if ball_horz_speed <= max_horz_speed :
                 ball_horz_speed += 0.2
-        elif ball_p2_bottom_collision :
+        elif ball_p2_bottom_collision and ball_left :
             ball_left = False
             ball_up = False
             if ball_horz_speed <= max_horz_speed :
