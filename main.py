@@ -1,21 +1,23 @@
 import pygame, random
 
-# pygame setup
+# magor game setup
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
-pygame.display.set_caption("Pong_prototype")
+pygame.display.set_caption("PYPONG")
 clock = pygame.time.Clock()
 running = True
 game_active = False
 game_font = pygame.font.Font("minecraftRegularBmg3.otf", 150)
-tutorial_font = pygame.font.Font("minecraftRegularBmg3.otf", 50)
+tutorial_font = pygame.font.Font("minecraftRegularBmg3.otf", 30)
 score_p1 = 0
 score_p2 = 0
 score_p1_pos = screen.get_width() * 11/15
 hyphen = pygame.Surface((100,10))
 hyphen.fill ("white")
 title_surf = game_font.render("PYPONG", False, "white")
-tutorial = tutorial_font.render("stuff hghghghhggggghghghghgghghghghghghgghghhgghg", False, "white")
+tutorial_1 = tutorial_font.render("Player 1 : arrows UP & DOWN", False, "cyan")
+tutorial_2 = tutorial_font.render("Player 2 : W & S", False, "orange")
+tutorial_3 = tutorial_font.render("SPACE = start", False, "white")
 
 # player positioning
 player1_pos = pygame.Vector2(screen.get_width() * 14/15, (screen.get_height() / 2) -80)
@@ -24,7 +26,7 @@ player2_pos = pygame.Vector2(screen.get_width() * 1/15, (screen.get_height() / 2
 # ball setup
 ball_origin = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 ball_pos = pygame.Vector2(ball_origin.x, ball_origin.y)
-ball_org_speed = 3
+ball_org_speed = 2
 ball_vert_speed = 1
 ball_horz_speed = 1
 max_vert_speed = 16
@@ -56,7 +58,9 @@ while running:
     
     screen.fill("dimgrey")
     screen.blit(title_surf, (375,260))
-    screen.blit(tutorial, (100,600))
+    screen.blit(tutorial_1, (700,450))
+    screen.blit(tutorial_2, (250,450))
+    screen.blit(tutorial_3, (550,550))
 
 
     score_p1_surf = game_font.render(f"{score_p1}", False, "cyan")
@@ -71,6 +75,12 @@ while running:
     if game_active == False :
         ball_pos.x = ball_origin.x
         ball_pos.y = ball_origin.y
+    
+    if game_active == False and ball_vert_speed >= 2 : 
+        ball_vert_speed = ball_org_speed
+    if game_active == False and ball_horz_speed >= 2 :
+        ball_horz_speed = ball_org_speed
+
 
     if keys[pygame.K_SPACE] :
         game_active = True
@@ -92,9 +102,9 @@ while running:
         
 
         if ball_up :
-            ball_pos.y -= 2 * ball_vert_speed
+            ball_pos.y -= 200 * ball_vert_speed * dt
         else :
-            ball_pos.y += 2 * ball_vert_speed
+            ball_pos.y += 200 * ball_vert_speed * dt
         
         if ball_pos.y < 8 :
             ball_up = False
@@ -107,9 +117,9 @@ while running:
                 ball_vert_speed += 0.1
         
         if ball_left :
-            ball_pos.x -= 2 * ball_horz_speed
+            ball_pos.x -= 200 * ball_horz_speed * dt
         else :
-            ball_pos.x += 2 * ball_horz_speed
+            ball_pos.x += 200 * ball_horz_speed * dt
         
         if ball_pos.x < -8 :
             ball_left = False
@@ -128,10 +138,10 @@ while running:
         player1.fill("cyan")
         screen.blit(player1, (player1_pos.x, player1_pos.y))
 
-        if keys[pygame.K_UP] and player1_pos.y >0:
-            player1_pos.y -= 500 * dt
+        if keys[pygame.K_UP] and player1_pos.y >0 :
+            player1_pos.y -= 500 * (ball_vert_speed * 2/4) * dt
         if keys[pygame.K_DOWN] and player1_pos.y < 560 :
-            player1_pos.y += 500 * dt
+            player1_pos.y += 500 * (ball_vert_speed * 2/4) * dt
 
 
         # setting up top and bottom collision boxes for player1
@@ -156,9 +166,9 @@ while running:
         screen.blit(player2, (player2_pos.x -10, player2_pos.y))
         
         if keys[pygame.K_w] and player2_pos.y > 0 :
-            player2_pos.y -= 500 * dt
+            player2_pos.y -= 500 * (ball_vert_speed * 2/4) * dt
         if keys[pygame.K_s] and player2_pos.y < 560 :
-            player2_pos.y += 500 * dt
+            player2_pos.y += 500 * (ball_vert_speed * 2/4) * dt
         
 
         # ball collision with player2

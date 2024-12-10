@@ -34,3 +34,9 @@ cut content {
     man = pygame.image.load("the-mystery.man.jpg")
     screen.blit(funny, (1,1))
 }
+
+Credits {
+    Help in setting up program : David
+    
+    Feedback : David
+}
