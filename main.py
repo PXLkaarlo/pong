@@ -1,6 +1,6 @@
 import pygame, random
 
-# magor game setup
+# major game setup
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("PYPONG")
@@ -187,9 +187,6 @@ while running:
                 ball_horz_speed += 0.2
         
         # end of gameloop
-
-        
-
 
     # flip() the display to put your work on screen
     pygame.display.flip()
