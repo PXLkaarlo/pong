@@ -32,7 +32,7 @@ cut content {
     screen.blit(funny, ((screen.get_width() /2) - 100, (screen.get_height() /2) - 100))
     
     man = pygame.image.load("the-mystery.man.jpg")
-    screen.blit(funny, (1,1))
+    screen.blit(man, (1,1))
 }
 
 Credits {
