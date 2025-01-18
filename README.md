@@ -27,12 +27,16 @@ What I need to do{
     make a goal system for player2
 }
 
-cut content {
-    funny = pygame.image.load("kekw-emote.jpg")
-    screen.blit(funny, ((screen.get_width() /2) - 100, (screen.get_height() /2) - 100))
-    
-    man = pygame.image.load("the-mystery.man.jpg")
-    screen.blit(man, (1,1))
+
+create an online leaderboard{
+    find out how servers and clients work
+    create leaderboard menu
+    create variables and spots for positioning in the leaderboard
+    make it work
+}
+
+create a seprate online play mode{
+    wich side each player is locaded is radnomised each session but synced
 }
 
 Credits {

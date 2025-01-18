@@ -7,6 +7,7 @@ pygame.display.set_caption("PYPONG")
 clock = pygame.time.Clock()
 running = True
 game_active = False
+leaderboard = False
 game_font = pygame.font.Font("minecraftRegularBmg3.otf", 150)
 tutorial_font = pygame.font.Font("minecraftRegularBmg3.otf", 30)
 score_p1 = 0
@@ -187,6 +188,10 @@ while running:
                 ball_horz_speed += 0.2
         
         # end of gameloop
+
+
+    if leaderboard :
+        None
 
     # flip() the display to put your work on screen
     pygame.display.flip()
