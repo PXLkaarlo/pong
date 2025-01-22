@@ -27,6 +27,7 @@ What I need to do{
     make a goal system for player2
 }
 
+bull to appease the omnissiah
 
 create an online leaderboard{
     find out how servers and clients work
@@ -41,6 +42,6 @@ create a seprate online play mode{
 
 Credits {
     Help in setting up program : David
-    
+
     Feedback : David
 }

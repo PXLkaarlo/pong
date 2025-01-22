@@ -7,7 +7,7 @@ pygame.display.set_caption("PYPONG")
 clock = pygame.time.Clock()
 running = True
 game_active = False
-leaderboard = False
+leaderboard_menu = False
 game_font = pygame.font.Font("minecraftRegularBmg3.otf", 150)
 tutorial_font = pygame.font.Font("minecraftRegularBmg3.otf", 30)
 score_p1 = 0
@@ -19,6 +19,7 @@ title_surf = game_font.render("PYPONG", False, "white")
 tutorial_1 = tutorial_font.render("Player 1 : arrows UP & DOWN", False, "cyan")
 tutorial_2 = tutorial_font.render("Player 2 : W & S", False, "orange")
 tutorial_3 = tutorial_font.render("SPACE = start", False, "white")
+leaderboard_title = game_font.render("LEADERBOARD", False, "white")
 
 # player positioning
 player1_pos = pygame.Vector2(screen.get_width() * 14/15, (screen.get_height() / 2) -80)
@@ -86,6 +87,8 @@ while running:
     if keys[pygame.K_SPACE] :
         game_active = True
     
+    if keys[pygame.K_l] :
+        leaderboard_menu = True
 
     if game_active :
         # fill the screen with a color to wipe away anything from last frame
@@ -190,8 +193,11 @@ while running:
         # end of gameloop
 
 
-    if leaderboard :
-        None
+    if leaderboard_menu :
+        screen.fill("crimson")
+        screen.blit(leaderboard_title, (150 ,100))
+
+        leaderboard_menu = False
 
     # flip() the display to put your work on screen
     pygame.display.flip()
