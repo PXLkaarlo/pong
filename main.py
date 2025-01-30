@@ -1,4 +1,4 @@
-import pygame, random
+import pygame, random, leaderboard
 
 # major game setup
 pygame.init()
@@ -194,8 +194,20 @@ while running:
 
 
     if leaderboard_menu :
-        screen.fill("crimson")
+        screen.fill("brown")
         screen.blit(leaderboard_title, (150 ,100))
+
+        screen.blit(tutorial_font.render("#1", False, "white"), (screen.get_width() * 4/15, 300))
+        screen.blit(tutorial_font.render("#2", False, "white"), (screen.get_width() * 4/15, 350))
+        screen.blit(tutorial_font.render("#3", False, "white"), (screen.get_width() * 4/15, 400))
+        screen.blit(tutorial_font.render("#4", False, "white"), (screen.get_width() * 4/15, 450))
+        screen.blit(tutorial_font.render("#5", False, "white"), (screen.get_width() * 4/15, 500))
+
+        screen.blit(tutorial_font.render(f"{leaderboard.mylist[0]}", False, "white"), (screen.get_width() * 11/15, 300))
+        screen.blit(tutorial_font.render(f"{leaderboard.mylist[1]}", False, "white"), (screen.get_width() * 11/15, 350))
+        screen.blit(tutorial_font.render(f"{leaderboard.mylist[2]}", False, "white"), (screen.get_width() * 11/15, 400))
+        screen.blit(tutorial_font.render(f"{leaderboard.mylist[3]}", False, "white"), (screen.get_width() * 11/15, 450))
+        screen.blit(tutorial_font.render(f"{leaderboard.mylist[4]}", False, "white"), (screen.get_width() * 11/15, 500))
 
         leaderboard_menu = False
 
