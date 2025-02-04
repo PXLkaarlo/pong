@@ -204,26 +204,12 @@ while running:
         screen.blit(tutorial_font.render("#5", False, "white"), (screen.get_width() * 4/15, 500))
 
 
-        if leaderboard.boardplayer1.score > leaderboard.boardplayer2.score and leaderboard.boardplayer1.score > leaderboard.boardplayer3.score and leaderboard.boardplayer1.score > leaderboard.boardplayer4.score and leaderboard.boardplayer1.score > leaderboard.boardplayer5.score :
-            screen.blit(tutorial_font.render(f"{leaderboard.boardplayer1.name}", False, "white"), (screen.get_width() * 11/15, 300))
-        
-        elif leaderboard.boardplayer2.score > leaderboard.boardplayer1.score and leaderboard.boardplayer2.score > leaderboard.boardplayer3.score and leaderboard.boardplayer2.score > leaderboard.boardplayer4.score and leaderboard.boardplayer2.score > leaderboard.boardplayer5.score :
-            screen.blit(tutorial_font.render(f"{leaderboard.boardplayer2.name}", False, "white"), (screen.get_width() * 11/15, 300))
-        
-        elif leaderboard.boardplayer3.score > leaderboard.boardplayer1.score and leaderboard.boardplayer3.score > leaderboard.boardplayer2.score and leaderboard.boardplayer3.score > leaderboard.boardplayer4.score and leaderboard.boardplayer3.score > leaderboard.boardplayer5.score :
-            screen.blit(tutorial_font.render(f"{leaderboard.boardplayer3.name}", False, "white"), (screen.get_width() * 11/15, 300))
-        
-        elif leaderboard.boardplayer4.score > leaderboard.boardplayer1.score and leaderboard.boardplayer4.score > leaderboard.boardplayer2.score and leaderboard.boardplayer4.score > leaderboard.boardplayer3.score and leaderboard.boardplayer4.score > leaderboard.boardplayer5.score :
-            screen.blit(tutorial_font.render(f"{leaderboard.boardplayer4.name}", False, "white"), (screen.get_width() * 11/15, 300))
-        
-        else :
-            screen.blit(tutorial_font.render(f"{leaderboard.boardplayer5.name}", False, "white"), (screen.get_width() * 11/15, 300))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[0].name}", False, "white"), (screen.get_width() * 11/15, 300))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[1].name}", False, "white"), (screen.get_width() * 11/15, 350))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[2].name}", False, "white"), (screen.get_width() * 11/15, 400))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[3].name}", False, "white"), (screen.get_width() * 11/15, 450))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[4].name}", False, "white"), (screen.get_width() * 11/15, 500))
 
-
-        #screen.blit(tutorial_font.render(f"{leaderboard.boardplayer2.name}", False, "white"), (screen.get_width() * 11/15, 350))
-        #screen.blit(tutorial_font.render(f"{leaderboard.boardplayer3.name}", False, "white"), (screen.get_width() * 11/15, 400))
-        #screen.blit(tutorial_font.render(f"{leaderboard.boardplayer4.name}", False, "white"), (screen.get_width() * 11/15, 450))
-        #screen.blit(tutorial_font.render(f"{leaderboard.boardplayer5.name}", False, "white"), (screen.get_width() * 11/15, 500))
 
         leaderboard_menu = False
 

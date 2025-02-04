@@ -1,3 +1,6 @@
+from operator import attrgetter
+
+
 mylist = []
 #for i in range(5):
 #    mylist.append(int(input()))
@@ -28,7 +31,8 @@ boardplayer3 = status("A_Swedish_Gamer", 32)
 boardplayer4 = status("sweatlord", 100)
 boardplayer5 = status("dounce", 8)
 
-playerlist = [boardplayer1.score, boardplayer2.score, boardplayer3.score, boardplayer4.score, boardplayer5.score]
+playerlist = [boardplayer1, boardplayer2, boardplayer3, boardplayer4, boardplayer5]
 
-print(playerlist)
+#print(playerlist)
 
+playerlist.sort(key=attrgetter('score'), reverse=True) 
