@@ -1,19 +1,9 @@
 mylist = []
-for i in range(5):
-    mylist.append(int(input()))
-mylist.sort(reverse=True)
-print(mylist)
-print(mylist[2])
-
-necrotics = 3
-parasitics = "headcrab"
-
-hazard = (necrotics,parasitics)
-
-otherlist = [(1,"omega"), (2,"lambda"), (5,"hazard"), (4,"contanment")]
-otherlist.append(hazard)
-otherlist.sort()
-print(otherlist)
+#for i in range(5):
+#    mylist.append(int(input()))
+#mylist.sort(reverse=True)
+#print(mylist)
+#print(mylist[2])
 
 class item :
     def __init__(self, xp, lv):
@@ -23,5 +13,22 @@ class item :
 apple = item(20, 1)
 orange = item(50, 2)
 
-print("Apples give you", apple.xp, "xp.")
-print("But oranges get you to level", orange.lv)
+#print("Apples give you", apple.xp, "xp.")
+#print("But oranges get you to level", orange.lv)
+
+
+class status :
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+boardplayer1 = status("Kaarlo", 23)
+boardplayer2 = status("Nallis21", 17)
+boardplayer3 = status("A_Swedish_Gamer", 32)
+boardplayer4 = status("sweatlord", 100)
+boardplayer5 = status("dounce", 8)
+
+playerlist = [boardplayer1.score, boardplayer2.score, boardplayer3.score, boardplayer4.score, boardplayer5.score]
+
+print(playerlist)
+
