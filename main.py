@@ -196,6 +196,7 @@ while running:
     if leaderboard_menu :
         screen.fill("brown")
         screen.blit(leaderboard_title, (150 ,100))
+        screen.blit(tutorial_font.render("K = Main Menu", False, "white"), (screen.get_width() * 9/20, 600))
 
         screen.blit(tutorial_font.render("#1", False, "white"), (screen.get_width() * 4/15, 300))
         screen.blit(tutorial_font.render("#2", False, "white"), (screen.get_width() * 4/15, 350))
@@ -218,7 +219,8 @@ while running:
         screen.blit(tutorial_font.render(f"{leaderboard.playerlist[4].score}", False, "white"), (screen.get_width() * 11/15, 500))
 
 
-        leaderboard_menu = False
+        if keys[pygame.K_k] : 
+            leaderboard_menu = False
 
     # flip() the display to put your work on screen
     pygame.display.flip()
