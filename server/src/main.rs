@@ -20,12 +20,10 @@ fn main() {
             }
         } else {
             let msg: Vec<&str> = msg.as_str().unwrap().split(" ").collect();
-            leaderboard.push(
-                Player {
-                    username: String::from(msg[0]),
-                    score: msg[1].parse().unwrap()
-                }
-            );
+            leaderboard.push(Player {
+                username: String::from(msg[0]),
+                score: msg[1].parse().unwrap(),
+            });
         }
     }
 }
