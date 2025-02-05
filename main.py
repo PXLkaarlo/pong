@@ -204,11 +204,18 @@ while running:
         screen.blit(tutorial_font.render("#5", False, "white"), (screen.get_width() * 4/15, 500))
 
 
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[0].name}", False, "white"), (screen.get_width() * 11/15, 300))
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[1].name}", False, "white"), (screen.get_width() * 11/15, 350))
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[2].name}", False, "white"), (screen.get_width() * 11/15, 400))
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[3].name}", False, "white"), (screen.get_width() * 11/15, 450))
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[4].name}", False, "white"), (screen.get_width() * 11/15, 500))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[0].name}", False, "white"), (screen.get_width() * 5/15, 300))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[1].name}", False, "white"), (screen.get_width() * 5/15, 350))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[2].name}", False, "white"), (screen.get_width() * 5/15, 400))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[3].name}", False, "white"), (screen.get_width() * 5/15, 450))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[4].name}", False, "white"), (screen.get_width() * 5/15, 500))
+
+
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[0].score}", False, "white"), (screen.get_width() * 11/15, 300))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[1].score}", False, "white"), (screen.get_width() * 11/15, 350))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[2].score}", False, "white"), (screen.get_width() * 11/15, 400))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[3].score}", False, "white"), (screen.get_width() * 11/15, 450))
+        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[4].score}", False, "white"), (screen.get_width() * 11/15, 500))
 
 
         leaderboard_menu = False

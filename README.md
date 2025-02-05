@@ -40,7 +40,7 @@ create a seprate online play mode{
     wich side each player is locaded is radnomised each session but synced
 }
 
-Credits {
+Credits{
     Help in setting up program : David
 
     Feedback : David

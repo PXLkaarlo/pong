@@ -3,7 +3,7 @@ from operator import attrgetter
 
 mylist = []
 #for i in range(5):
-#    mylist.append(int(input()))
+#    mylist.append(int(input())
 #mylist.sort(reverse=True)
 #print(mylist)
 #print(mylist[2])
