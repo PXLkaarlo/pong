@@ -3,11 +3,9 @@ struct Player {
     score: u64,
 }
 
-fn main() {
-    let context = zmq::Context::new();
-    let responder = context.socket(zmq::REP).unwrap();
-
-    responder.bind("tcp://*:696969").unwrap();
+fn main() -> Result<(), std::io::Error> {
+    let responder = zmq::Context::new().socket(zmq::REP).unwrap();
+    responder.bind("tcp://127.0.0.1:696969")?;
 
     let mut leaderboard: Vec<Player> = Vec::new();
     let mut msg = zmq::Message::new();
@@ -25,5 +23,6 @@ fn main() {
                 score: msg[1].parse().unwrap(),
             });
         }
+        responder.send("done", 0).unwrap();
     }
 }
