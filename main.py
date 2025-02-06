@@ -1,4 +1,16 @@
-import pygame, random, leaderboard
+import pygame, random, leaderboard, zmq
+
+# server setup
+context = zmq.Context()
+socket = context.socket(zmq.REQ)
+socket.connect("tcp://192.168.5.190:696969")
+
+socket.send_string("A_Swedish_Gamer 420", 0)
+msg = socket.recv()
+socket.send_string("get", 0)
+msg = socket.recv()
+
+
 
 # major game setup
 pygame.init()
@@ -63,7 +75,7 @@ while running:
     screen.blit(tutorial_1, (700,450))
     screen.blit(tutorial_2, (250,450))
     screen.blit(tutorial_3, (550,550))
-
+    screen.blit(tutorial_font.render("L = leaderboard", False, "crimson"), (525,600))
 
     score_p1_surf = game_font.render(f"{score_p1}", False, "cyan")
     score_p2_surf = game_font.render(f"{score_p2}", False, "orange")
