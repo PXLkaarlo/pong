@@ -33,6 +33,4 @@ boardplayer5 = status("dounce", 8)
 
 playerlist = [boardplayer1, boardplayer2, boardplayer3, boardplayer4, boardplayer5]
 
-#print(playerlist)
-
 playerlist.sort(key=attrgetter('score'), reverse=True) 

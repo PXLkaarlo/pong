@@ -1,5 +1,6 @@
-import pygame, random, leaderboard, zmq, threading
+import pygame, random, zmq, threading
 from queue import Queue
+from operator import attrgetter
 
 # server setup
 context = zmq.Context()
@@ -21,7 +22,29 @@ networking_thread = threading.Thread(target=server_connect)
 
 networking_thread.start()
 
-print(leaderboard_queue.get())
+
+# leaderboard setup
+class player :
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+splitter = leaderboard_queue.get().split()
+
+playerlist = []
+
+for index in range(10) :
+    if index % 2 == 0:
+        playerlist.append(player(splitter[index], splitter[index+1]))
+
+
+for player in playerlist :
+    print(player.name)
+    print(player.score)
+
+
+#playerlist.sort(key=attrgetter('score'), reverse=True)
+
 
 # major game setup
 pygame.init()
@@ -227,19 +250,20 @@ while running:
         screen.blit(tutorial_font.render("#4", False, "white"), (screen.get_width() * 4/15, 450))
         screen.blit(tutorial_font.render("#5", False, "white"), (screen.get_width() * 4/15, 500))
 
+        
+        screen.blit(tutorial_font.render(f"{playerlist[0].name}", False, "white"), (screen.get_width() * 5/15, 300))
+        screen.blit(tutorial_font.render(f"{playerlist[1].name}", False, "white"), (screen.get_width() * 5/15, 350))
+        screen.blit(tutorial_font.render(f"{playerlist[2].name}", False, "white"), (screen.get_width() * 5/15, 400))
+        screen.blit(tutorial_font.render(f"{playerlist[3].name}", False, "white"), (screen.get_width() * 5/15, 450))
+        screen.blit(tutorial_font.render(f"{playerlist[4].name}", False, "white"), (screen.get_width() * 5/15, 500))
 
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[0].name}", False, "white"), (screen.get_width() * 5/15, 300))
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[1].name}", False, "white"), (screen.get_width() * 5/15, 350))
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[2].name}", False, "white"), (screen.get_width() * 5/15, 400))
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[3].name}", False, "white"), (screen.get_width() * 5/15, 450))
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[4].name}", False, "white"), (screen.get_width() * 5/15, 500))
 
-
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[0].score}", False, "white"), (screen.get_width() * 11/15, 300))
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[1].score}", False, "white"), (screen.get_width() * 11/15, 350))
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[2].score}", False, "white"), (screen.get_width() * 11/15, 400))
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[3].score}", False, "white"), (screen.get_width() * 11/15, 450))
-        screen.blit(tutorial_font.render(f"{leaderboard.playerlist[4].score}", False, "white"), (screen.get_width() * 11/15, 500))
+        screen.blit(tutorial_font.render(f"{playerlist[0].score}", False, "white"), (screen.get_width() * 11/15, 300))
+        screen.blit(tutorial_font.render(f"{playerlist[1].score}", False, "white"), (screen.get_width() * 11/15, 350))
+        screen.blit(tutorial_font.render(f"{playerlist[2].score}", False, "white"), (screen.get_width() * 11/15, 400))
+        screen.blit(tutorial_font.render(f"{playerlist[3].score}", False, "white"), (screen.get_width() * 11/15, 450))
+        screen.blit(tutorial_font.render(f"{playerlist[4].score}", False, "white"), (screen.get_width() * 11/15, 500))
+        
 
 
         if keys[pygame.K_k] : 
