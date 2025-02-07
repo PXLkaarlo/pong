@@ -1,16 +1,27 @@
-import pygame, random, leaderboard, zmq
+import pygame, random, leaderboard, zmq, threading
+from queue import Queue
 
 # server setup
 context = zmq.Context()
 socket = context.socket(zmq.REQ)
-socket.connect("tcp://192.168.5.190:696969")
+socket.setsockopt(zmq.CONNECT_TIMEOUT, 5000)
+socket.setsockopt(zmq.LINGER, 0)
+socket.setsockopt(zmq.RCVTIMEO, 1000)
 
-socket.send_string("A_Swedish_Gamer 420", 0)
-msg = socket.recv()
-socket.send_string("get", 0)
-msg = socket.recv()
+def server_connect():
+    socket.connect("tcp://127.0.0.1:696969")
+    socket.send_string("get")
+    try:
+        leaderboard_queue.put(socket.recv())
+    except:
+        leaderboard_queue.put("None 0 None 0 None 0 None 0 None 0")
+    
+leaderboard_queue = Queue()
+networking_thread = threading.Thread(target=server_connect)
 
+networking_thread.start()
 
+print(leaderboard_queue.get())
 
 # major game setup
 pygame.init()
@@ -243,3 +254,5 @@ while running:
     dt = clock.tick(60) / 1000
 
 pygame.quit()
+networking_thread.join()
+context.destroy()
