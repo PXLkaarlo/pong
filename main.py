@@ -23,6 +23,31 @@ networking_thread = threading.Thread(target=server_connect)
 networking_thread.start()
 
 
+# saving setup
+def ask(window, question) :
+    "ask(window, question) -> answer"
+    pygame.font.init()
+    current_name = []
+    screen(window, question + ": " + str.join(current_name, ""))
+    
+    while 1 :
+        name_letter = pygame.key.get_pressed()
+        if keys[pygame.K_BACKSPACE] :
+            current_name = current_name[0:-1]
+        
+        elif keys[pygame.K_RETURN] :
+            break
+
+        elif keys[pygame.K_MINUS] :
+            current_name.append("_")
+        
+        elif name_letter < 127 :
+            current_name.append(chr(name_letter))
+
+        screen(window, question + ": " + str.join(current_name, ""))
+    return str.join(current_name,"")
+
+
 # leaderboard setup
 class player :
     def __init__(self, name, score):
@@ -54,6 +79,7 @@ clock = pygame.time.Clock()
 running = True
 game_active = False
 leaderboard_menu = False
+saving = False
 game_font = pygame.font.Font("minecraftRegularBmg3.otf", 150)
 tutorial_font = pygame.font.Font("minecraftRegularBmg3.otf", 30)
 score_p1 = 0
@@ -67,9 +93,11 @@ tutorial_2 = tutorial_font.render("Player 2 : W & S", False, "orange")
 tutorial_3 = tutorial_font.render("SPACE = start", False, "white")
 leaderboard_title = game_font.render("LEADERBOARD", False, "white")
 
+
 # player positioning
 player1_pos = pygame.Vector2(screen.get_width() * 14/15, (screen.get_height() / 2) -80)
 player2_pos = pygame.Vector2(screen.get_width() * 1/15, (screen.get_height() / 2) -80)
+
 
 # ball setup
 ball_origin = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
@@ -79,6 +107,7 @@ ball_vert_speed = 1
 ball_horz_speed = 1
 max_vert_speed = 16
 max_horz_speed = 12
+
 
 # randomiser for starting direction
 starting_direction = random.choice([1, 2, 3, 4])
@@ -110,6 +139,7 @@ while running:
     screen.blit(tutorial_2, (250,450))
     screen.blit(tutorial_3, (550,550))
     screen.blit(tutorial_font.render("L = leaderboard", False, "crimson"), (525,600))
+    screen.blit(tutorial_font.render("J = Save score to leaderboard", False, "green"), (425,650))
 
     score_p1_surf = game_font.render(f"{score_p1}", False, "cyan")
     score_p2_surf = game_font.render(f"{score_p2}", False, "orange")
@@ -133,15 +163,18 @@ while running:
     if keys[pygame.K_SPACE] :
         game_active = True
     
-    if keys[pygame.K_l] :
+    if keys[pygame.K_l] and game_active == False :
         leaderboard_menu = True
+    
+    if keys[pygame.K_j] and game_active == False :
+        saving = True
 
     if game_active :
         # fill the screen with a color to wipe away anything from last frame
         screen.fill("black")
 
         screen.blit(score_p1_surf, score_p1_rect)
-        screen.blit(hyphen, ((screen.get_width() /2) -50, 175))
+        # screen.blit(hyphen, ((screen.get_width() /2) -50, 175))
         screen.blit(score_p2_surf, (screen.get_width() * 4/15, 100))
 
 
@@ -268,6 +301,17 @@ while running:
 
         if keys[pygame.K_k] : 
             leaderboard_menu = False
+    
+
+    if saving :
+        screen.fill("darkgreen")
+        screen.blit(tutorial_font.render("K = Main Menu", False, "white"), (screen.get_width() * 9/20, 600))
+
+        ask()
+
+        if keys[pygame.K_k] : 
+            saving = False
+
 
     # flip() the display to put your work on screen
     pygame.display.flip()
