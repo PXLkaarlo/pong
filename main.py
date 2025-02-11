@@ -1,4 +1,4 @@
-import pygame, random, zmq, threading
+import pygame, random, zmq, threading, pygame_textinput
 from queue import Queue
 from operator import attrgetter
 
@@ -24,29 +24,7 @@ networking_thread.start()
 
 
 # saving setup
-def ask(window, question) :
-    "ask(window, question) -> answer"
-    pygame.font.init()
-    current_name = []
-    screen(window, question + ": " + str.join(current_name, ""))
-    
-    while 1 :
-        name_letter = pygame.key.get_pressed()
-        if keys[pygame.K_BACKSPACE] :
-            current_name = current_name[0:-1]
-        
-        elif keys[pygame.K_RETURN] :
-            break
-
-        elif keys[pygame.K_MINUS] :
-            current_name.append("_")
-        
-        elif name_letter < 127 :
-            current_name.append(chr(name_letter))
-
-        screen(window, question + ": " + str.join(current_name, ""))
-    return str.join(current_name,"")
-
+textinput = pygame_textinput.TextInputVisualizer()
 
 # leaderboard setup
 class player :
@@ -68,7 +46,7 @@ for player in playerlist :
     print(player.score)
 
 
-#playerlist.sort(key=attrgetter('score'), reverse=True)
+"playerlist.sort(key=attrgetter('score'), reverse=True)"
 
 
 # major game setup
@@ -85,8 +63,6 @@ tutorial_font = pygame.font.Font("minecraftRegularBmg3.otf", 30)
 score_p1 = 0
 score_p2 = 0
 score_p1_pos = screen.get_width() * 11/15
-hyphen = pygame.Surface((100,10))
-hyphen.fill ("white")
 title_surf = game_font.render("PYPONG", False, "white")
 tutorial_1 = tutorial_font.render("Player 1 : arrows UP & DOWN", False, "cyan")
 tutorial_2 = tutorial_font.render("Player 2 : W & S", False, "orange")
@@ -128,8 +104,9 @@ else :
 while running:
     # poll for events
     keys = pygame.key.get_pressed()
+    events = pygame.event.get()
     # pygame.QUIT event means the user clicked X to close your window
-    for event in pygame.event.get():
+    for event in events:
         if event.type == pygame.QUIT:
             running = False
     
@@ -139,7 +116,7 @@ while running:
     screen.blit(tutorial_2, (250,450))
     screen.blit(tutorial_3, (550,550))
     screen.blit(tutorial_font.render("L = leaderboard", False, "crimson"), (525,600))
-    screen.blit(tutorial_font.render("J = Save score to leaderboard", False, "green"), (425,650))
+    screen.blit(tutorial_font.render("K = Save score to leaderboard", False, "green"), (425,650))
 
     score_p1_surf = game_font.render(f"{score_p1}", False, "cyan")
     score_p2_surf = game_font.render(f"{score_p2}", False, "orange")
@@ -166,7 +143,7 @@ while running:
     if keys[pygame.K_l] and game_active == False :
         leaderboard_menu = True
     
-    if keys[pygame.K_j] and game_active == False :
+    if keys[pygame.K_k] and game_active == False :
         saving = True
 
     if game_active :
@@ -275,7 +252,7 @@ while running:
     if leaderboard_menu :
         screen.fill("brown")
         screen.blit(leaderboard_title, (150 ,100))
-        screen.blit(tutorial_font.render("K = Main Menu", False, "white"), (screen.get_width() * 9/20, 600))
+        screen.blit(tutorial_font.render("ENTER = Main Menu", False, "white"), (screen.get_width() * 8/20, 600))
 
         screen.blit(tutorial_font.render("#1", False, "white"), (screen.get_width() * 4/15, 300))
         screen.blit(tutorial_font.render("#2", False, "white"), (screen.get_width() * 4/15, 350))
@@ -299,17 +276,20 @@ while running:
         
 
 
-        if keys[pygame.K_k] : 
+        if keys[pygame.K_RETURN] : 
             leaderboard_menu = False
     
 
     if saving :
         screen.fill("darkgreen")
-        screen.blit(tutorial_font.render("K = Main Menu", False, "white"), (screen.get_width() * 9/20, 600))
+        screen.blit(tutorial_font.render("ENTER = Main Menu", False, "white"), (screen.get_width() * 8/20, 600))
 
-        ask()
+        pygame.key.set_repeat(200, 25) # press every 50 ms after waiting 200 ms
 
-        if keys[pygame.K_k] : 
+        textinput.update(events)
+        screen.blit(textinput.surface, (400,200))
+
+        if keys[pygame.K_RETURN] : 
             saving = False
 
 
