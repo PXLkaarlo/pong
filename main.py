@@ -24,10 +24,12 @@ networking_thread.start()
 
 
 # saving setup
-textinput_font = pygame.font.SysFont("minecraftRegularBmg3.otf", 30)
-maneger = pygame_textinput.TextInputManager(validator= lambda input: len(input) <= 8)
-textinput = pygame_textinput.TextInputVisualizer(None, font_object=textinput_font)
-textinput_custom = pygame_textinput.TextInputVisualizer()
+
+textinput_font = pygame.font.SysFont("minecraftRegularBmg3.otf", 50)
+maneger = pygame_textinput.TextInputManager(validator = lambda input: len(input) <= 10)
+textinput_custom = pygame_textinput.TextInputVisualizer(manager=maneger, font_object=textinput_font)
+
+textinput = pygame_textinput.TextInputVisualizer()
 
 # leaderboard setup
 class player :
@@ -140,7 +142,7 @@ while running:
         ball_horz_speed = ball_org_speed
 
 
-    if keys[pygame.K_SPACE] :
+    if keys[pygame.K_SPACE] and saving == False and leaderboard_menu == False :
         game_active = True
     
     if keys[pygame.K_l] and game_active == False :
@@ -287,11 +289,16 @@ while running:
         screen.fill("darkgreen")
         screen.blit(tutorial_font.render("ENTER = Main Menu", False, "white"), (screen.get_width() * 8/20, 600))
 
-        pygame.key.set_repeat(200, 25) # press every 50 ms after waiting 200 ms
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE :
+            print("you can not do that starfox")
+        
+        if textinput_custom.value >= " " :
+            print("NOOOOOOOOOOOOOOOOOOOOO")
 
         textinput.update(events)
-        textinput
-        screen.blit(textinput.surface, (400,200))
+        textinput_custom.update(events)
+
+        screen.blit(textinput_custom.surface, (400,200))
 
         if keys[pygame.K_RETURN] : 
             saving = False
