@@ -24,7 +24,10 @@ networking_thread.start()
 
 
 # saving setup
-textinput = pygame_textinput.TextInputVisualizer()
+textinput_font = pygame.font.SysFont("minecraftRegularBmg3.otf", 30)
+maneger = pygame_textinput.TextInputManager(validator= lambda input: len(input) <= 8)
+textinput = pygame_textinput.TextInputVisualizer(None, font_object=textinput_font)
+textinput_custom = pygame_textinput.TextInputVisualizer()
 
 # leaderboard setup
 class player :
@@ -287,6 +290,7 @@ while running:
         pygame.key.set_repeat(200, 25) # press every 50 ms after waiting 200 ms
 
         textinput.update(events)
+        textinput
         screen.blit(textinput.surface, (400,200))
 
         if keys[pygame.K_RETURN] : 
