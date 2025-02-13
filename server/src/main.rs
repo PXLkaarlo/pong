@@ -3,9 +3,9 @@ struct Player {
     score: u64,
 }
 
-fn main() -> Result<(), std::io::Error> {
+fn main() {
     let responder = zmq::Context::new().socket(zmq::REP).unwrap();
-    responder.bind("tcp://*:696969")?;
+    responder.bind("tcp://*:696969").unwrap();
 
     let mut leaderboard: Vec<Player> = Vec::with_capacity(6);
     for _ in 0..5 {
@@ -20,7 +20,7 @@ fn main() -> Result<(), std::io::Error> {
         if msg.as_str() == Some("get") {
             let mut msg = String::new();
             for item in &leaderboard {
-                msg = msg + &item.username + " " + &item.score.to_string() + " ";
+                msg.push_str(&format!("{} {} ", &item.username, &item.score.to_string()));
             }
             responder.send(&msg, 0).unwrap();
         } else {
@@ -30,7 +30,7 @@ fn main() -> Result<(), std::io::Error> {
                 score: msg[1].parse().unwrap(),
             });
             leaderboard.sort_by_key(|x| std::cmp::Reverse(x.score));
-            if leaderboard.len() < 5 {
+            if leaderboard.len() > 5 {
                 leaderboard.swap_remove(5);
             }
             responder.send("done", 0).unwrap();
