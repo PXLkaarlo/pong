@@ -14,7 +14,7 @@ def server_connect():
     try:
         leaderboard_queue.put(socket.recv())
     except:
-        leaderboard_queue.put("None 0 None 0 None 0 None 0 None 0")
+        leaderboard_queue.put(b'Could 0 Not 0 Connect 0 To 0 Server 0')
     
 leaderboard_queue = Queue()
 networking_thread = threading.Thread(target=server_connect)
@@ -257,26 +257,11 @@ while running:
         screen.blit(leaderboard_title, (150 ,100))
         screen.blit(tutorial_font.render("ENTER = Main Menu", False, "white"), (screen.get_width() * 8/20, 600))
 
-        screen.blit(tutorial_font.render("#1", False, "white"), (screen.get_width() * 4/15, 300))
-        screen.blit(tutorial_font.render("#2", False, "white"), (screen.get_width() * 4/15, 350))
-        screen.blit(tutorial_font.render("#3", False, "white"), (screen.get_width() * 4/15, 400))
-        screen.blit(tutorial_font.render("#4", False, "white"), (screen.get_width() * 4/15, 450))
-        screen.blit(tutorial_font.render("#5", False, "white"), (screen.get_width() * 4/15, 500))
-
-        
-        screen.blit(tutorial_font.render(f"{playerlist[0].name}", False, "white"), (screen.get_width() * 5/15, 300))
-        screen.blit(tutorial_font.render(f"{playerlist[1].name}", False, "white"), (screen.get_width() * 5/15, 350))
-        screen.blit(tutorial_font.render(f"{playerlist[2].name}", False, "white"), (screen.get_width() * 5/15, 400))
-        screen.blit(tutorial_font.render(f"{playerlist[3].name}", False, "white"), (screen.get_width() * 5/15, 450))
-        screen.blit(tutorial_font.render(f"{playerlist[4].name}", False, "white"), (screen.get_width() * 5/15, 500))
-
-
-        screen.blit(tutorial_font.render(f"{playerlist[0].score}", False, "white"), (screen.get_width() * 11/15, 300))
-        screen.blit(tutorial_font.render(f"{playerlist[1].score}", False, "white"), (screen.get_width() * 11/15, 350))
-        screen.blit(tutorial_font.render(f"{playerlist[2].score}", False, "white"), (screen.get_width() * 11/15, 400))
-        screen.blit(tutorial_font.render(f"{playerlist[3].score}", False, "white"), (screen.get_width() * 11/15, 450))
-        screen.blit(tutorial_font.render(f"{playerlist[4].score}", False, "white"), (screen.get_width() * 11/15, 500))
-        
+        for i in range(5):
+            latitude = 300 + 50 * i
+            screen.blit(tutorial_font.render(f"#{i + 1}", False, "white"), (screen.get_width() * 4/15, latitude))
+            screen.blit(tutorial_font.render(f"{playerlist[i].name}", False, "white"), (screen.get_width() * 5/15, latitude))
+            screen.blit(tutorial_font.render(f"{playerlist[i].score}", False, "white"), (screen.get_width() * 11/15, latitude))
 
 
         if keys[pygame.K_RETURN] : 
@@ -299,9 +284,13 @@ while running:
             screen.blit(tutorial_font.render("Can't use a space in your name.", False, "yellow"), (screen.get_width() * 8/20, 500))
 
         if keys[pygame.K_RETURN] and cantDoThat : 
-            socket.send_string(textinput_custom.value + " " + str(score_calc(score_p1, score_p2))) 
-            socket.recv()
-            saving = False
+            try:
+                socket.send_string(textinput_custom.value + " " + str(score_calc(score_p1, score_p2)))
+                socket.recv()
+            except:
+                print("Not connected to server")
+            finally:
+                saving = False
 
 
     # flip() the display to put your work on screen
