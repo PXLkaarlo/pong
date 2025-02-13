@@ -36,6 +36,7 @@ def score_calc(p1, p2) :
     else :
         return p2
 
+
 # leaderboard setup
 class player :
     def __init__(self, name, score):
@@ -49,14 +50,6 @@ playerlist = []
 for index in range(10) :
     if index % 2 == 0:
         playerlist.append(player(splitter[index].decode(), splitter[index+1].decode()))
-
-
-for player in playerlist :
-    print(player.name)
-    print(player.score)
-
-
-"playerlist.sort(key=attrgetter('score'), reverse=True)"
 
 
 # major game setup
@@ -258,6 +251,7 @@ while running:
         # end of gameloop
 
 
+
     if leaderboard_menu :
         screen.fill("brown")
         screen.blit(leaderboard_title, (150 ,100))
@@ -288,6 +282,7 @@ while running:
         if keys[pygame.K_RETURN] : 
             leaderboard_menu = False
     
+
 
     if saving :
         screen.fill("darkgreen")
