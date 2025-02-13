@@ -1,6 +1,5 @@
 import pygame, random, zmq, threading, pygame_textinput
 from queue import Queue
-from operator import attrgetter
 
 # server setup
 context = zmq.Context()
@@ -25,11 +24,17 @@ networking_thread.start()
 
 # saving setup
 
-textinput_font = pygame.font.SysFont("minecraftRegularBmg3.otf", 50)
-maneger = pygame_textinput.TextInputManager(validator = lambda input: len(input) <= 10)
-textinput_custom = pygame_textinput.TextInputVisualizer(manager=maneger, font_object=textinput_font)
+textinput_font = pygame.font.Font("minecraftRegularBmg3.otf", 50)
+manager = pygame_textinput.TextInputManager(validator = lambda input: len(input) <= 10)
+textinput_custom = pygame_textinput.TextInputVisualizer(manager=manager, font_object=textinput_font)
 
 textinput = pygame_textinput.TextInputVisualizer()
+
+def score_calc(p1, p2) :
+    if p1 > p2 :
+        return p1
+    else :
+        return p2
 
 # leaderboard setup
 class player :
@@ -43,7 +48,7 @@ playerlist = []
 
 for index in range(10) :
     if index % 2 == 0:
-        playerlist.append(player(splitter[index], splitter[index+1]))
+        playerlist.append(player(splitter[index].decode(), splitter[index+1].decode()))
 
 
 for player in playerlist :
@@ -156,7 +161,6 @@ while running:
         screen.fill("black")
 
         screen.blit(score_p1_surf, score_p1_rect)
-        # screen.blit(hyphen, ((screen.get_width() /2) -50, 175))
         screen.blit(score_p2_surf, (screen.get_width() * 4/15, 100))
 
 
@@ -289,18 +293,19 @@ while running:
         screen.fill("darkgreen")
         screen.blit(tutorial_font.render("ENTER = Main Menu", False, "white"), (screen.get_width() * 8/20, 600))
 
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE :
-            print("you can not do that starfox")
-        
-        if textinput_custom.value >= " " :
-            print("NOOOOOOOOOOOOOOOOOOOOO")
-
         textinput.update(events)
         textinput_custom.update(events)
 
         screen.blit(textinput_custom.surface, (400,200))
 
-        if keys[pygame.K_RETURN] : 
+        cantDoThat = not " " in textinput_custom.value
+
+        if cantDoThat == False :
+            screen.blit(tutorial_font.render("Can't use a space in your name.", False, "yellow"), (screen.get_width() * 8/20, 500))
+
+        if keys[pygame.K_RETURN] and cantDoThat : 
+            socket.send_string(textinput_custom.value + " " + str(score_calc(score_p1, score_p2))) 
+            socket.recv()
             saving = False
 
 
