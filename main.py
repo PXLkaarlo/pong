@@ -1,7 +1,7 @@
 import pygame, random, zmq, threading, pygame_textinput
 from queue import Queue
 
-# server setup
+# server connection
 context = zmq.Context()
 socket = context.socket(zmq.REQ)
 socket.setsockopt(zmq.CONNECT_TIMEOUT, 5000)
@@ -23,7 +23,6 @@ networking_thread.start()
 
 
 # saving setup
-
 textinput_font = pygame.font.Font("minecraftRegularBmg3.otf", 50)
 manager = pygame_textinput.TextInputManager(validator = lambda input: len(input) <= 10)
 textinput_custom = pygame_textinput.TextInputVisualizer(manager=manager, font_object=textinput_font)
@@ -139,7 +138,6 @@ while running:
     if game_active == False and ball_horz_speed >= 2 :
         ball_horz_speed = ball_org_speed
 
-
     if keys[pygame.K_SPACE] and saving == False and leaderboard_menu == False :
         game_active = True
     
@@ -194,7 +192,6 @@ while running:
             score_p2 += 1
 
 
-
         # player1
         player1 = pygame.Surface((10,160))
         player1.fill("cyan")
@@ -247,9 +244,6 @@ while running:
             ball_up = False
             if ball_horz_speed <= max_horz_speed :
                 ball_horz_speed += 0.2
-        
-        # end of gameloop
-
 
 
     if leaderboard_menu :
